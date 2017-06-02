@@ -41,9 +41,15 @@ sub fann_set_activation_function_output(fann,fann_activationfunc) is export is n
 sub fann_train_onfile(fann,fann_activationfunc) is export is native(&fannlib) {*}
 
 
-#sub fann_create_sparse(float $connection_rate, uint8 $num_layers) returns fann is export is native(&fannlib) {*}
+sub fann_create_sparse(float $connection_rate, uint8 $num_layers, *@neurons) returns fann is export {
+    my CArray[uint32] $layers = CArray[uint32].new(@neurons);
+    return fann_create_sparse_array($connection_rate, $num_layers, $layers);
+}
 sub fann_create_sparse_array(float $connection_rate, uint8 $num_layers, CArray[int32] $layers is rw ) returns fann is export is native(&fannlib) {*}
-#sub fann_create_shortcut(uint8 $num_layers) returns fann is export is native(&fannlib) {*}
+sub fann_create_shortcut(uint8 $num_layers, *@neurons) returns fann is export {
+    my CArray[uint32] $layers = CArray[uint32].new(@neurons);
+    return fann_create_shortcut_array($num_layers, $layers);
+}
 sub fann_create_shortcut_array(uint8 $num_layers, CArray[int32] $layers is rw ) returns fann is export is native(&fannlib) {*}
 sub fann_destroy(fann) is export is native(&fannlib) {*}
 sub fann_copy(fann) returns fann is export is native(&fannlib) {*}

@@ -2,6 +2,8 @@
 
 use AI::FANN::Raw;
 
+my $dir = callframe(0).annotations<file>.IO.parent.Str;
+
 my $num_input = 2;
 my $num_output = 1;
 my $num_layers = 3;
@@ -14,9 +16,9 @@ my fann $ann = fann_create_standard($num_layers, $num_input, $num_neurons_hidden
 fann_set_activation_function_hidden($ann, FANN_SIGMOID_SYMMETRIC);
 fann_set_activation_function_output($ann, FANN_SIGMOID_SYMMETRIC);
 
-fann_train_on_file($ann, "xor.data", $max_epochs, $epochs_between_reports, $desired_error);
+fann_train_on_file($ann, "$dir/data/xor.data", $max_epochs, $epochs_between_reports, $desired_error);
 
-fann_save($ann, "xor_float.net");
+fann_save($ann, "$dir/output/xor_float.net");
 
 fann_destroy($ann);
 

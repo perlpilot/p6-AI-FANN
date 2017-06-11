@@ -3,7 +3,7 @@
 use NativeCall;
 use AI::FANN::Raw;
 
-my $dir = callframe(0).annotations<file>.IO.parent.Str;
+my $dir = $*PROGRAM.parent.Str;
 
 my fann $ann = fann_create_from_file("$dir/output/xor_float.net");
 
